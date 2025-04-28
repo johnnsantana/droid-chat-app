@@ -1,9 +1,14 @@
-plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-}
+import org.gradle.kotlin.dsl.implementation
 
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinKsp)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.kotlinSerialization)
+    id ("kotlin-kapt")
+}
 android {
     namespace = "com.johnnsantana.droidchat"
     compileSdk = 35
@@ -37,6 +42,9 @@ android {
     buildFeatures {
         compose = true
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -49,6 +57,29 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation(libs.jwtdecode)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.coil.compose)
+
+    implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.javalite)
+
+    implementation(libs.firebase.bom)
+    implementation("com.google.firebase:firebase-messaging")
+    implementation(libs.accompanist.permissions)
+
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
