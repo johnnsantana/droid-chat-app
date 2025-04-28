@@ -74,9 +74,9 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.protobuf.javalite)
 
-    implementation(libs.firebase.bom)
-    implementation("com.google.firebase:firebase-messaging")
-    implementation(libs.accompanist.permissions)
+//    implementation(libs.firebase.bom)
+//    implementation("com.google.firebase:firebase-messaging")
+//    implementation(libs.accompanist.permissions)
 
 
     // Test
