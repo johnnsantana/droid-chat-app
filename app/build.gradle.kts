@@ -64,6 +64,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
+
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.coil.compose)
