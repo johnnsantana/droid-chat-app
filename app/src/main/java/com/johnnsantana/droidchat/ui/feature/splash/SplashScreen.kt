@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,10 +26,17 @@ import androidx.compose.ui.unit.dp
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.ui.theme.BackgroundGradient
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashRoute() {
+fun SplashRoute(
+    onNavigateToSignIn: () -> Unit
+) {
     SplashScreen()
+    LaunchedEffect(Unit) {
+        delay(2000)
+        onNavigateToSignIn()
+    }
 }
 
 @Composable
