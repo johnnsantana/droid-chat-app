@@ -4,14 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-04-28T17:14:33.071483750Z">
+        <DropdownSelection timestamp="2025-04-30T16:22:46.249067925Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/john/.config/.android/avd/Pixel_8_Pro.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/john/.config/.android/avd/Pixel_3a.avd" />
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
+      </SelectionState>
+      <SelectionState runConfigName="PrimaryTextFieldComponentPreview">
+        <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
   </component>
