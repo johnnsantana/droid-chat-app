@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.johnnsantana.droidchat.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,10 +17,10 @@ class SigInViewModel @Inject constructor(): ViewModel() {
     fun onEvent(event: SignInFormEvent) {
         when(event) {
             is SignInFormEvent.EmailChanged -> {
-                formState = formState.copy(email = event.email)
+                formState = formState.copy(email = event.email, emailError = null)
             }
             is SignInFormEvent.PasswordChanged -> {
-                formState = formState.copy(password = event.password)
+                formState = formState.copy(password = event.password, passwordError = null)
             }
             is SignInFormEvent.Submit -> {
                 doSignIn()
@@ -28,7 +29,16 @@ class SigInViewModel @Inject constructor(): ViewModel() {
     }
 
     fun doSignIn() {
-        formState = formState.copy(isLoading = true)
+        var isFormValid = true
+        if (formState.email.isBlank()) {
+            formState = formState.copy(emailError = R.string.error_message_email_invalid)
+            isFormValid = false
+        }
+
+      if (isFormValid) {
+          formState = formState.copy(isLoading = true)
+      }
 
     }
+
 }
