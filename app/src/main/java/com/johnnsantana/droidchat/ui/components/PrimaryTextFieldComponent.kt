@@ -66,11 +66,10 @@ fun PrimaryTextFieldComponent(
                 if (keyboardType == KeyboardType.Password && value.isNotEmpty()) {
                     val visibilityIcon = if (passwordVisible) {
                         R.drawable.ic_visibility
-                    } else {
-                        R.drawable.ic_visibility_off
-                    }
+                    } else R.drawable.ic_visibility_off
+
                     Icon(
-                        painter = painterResource(R.drawable.ic_visibility),
+                        painter = painterResource(id = visibilityIcon),
                         contentDescription = null,
                         modifier = Modifier
                             .clickable {
