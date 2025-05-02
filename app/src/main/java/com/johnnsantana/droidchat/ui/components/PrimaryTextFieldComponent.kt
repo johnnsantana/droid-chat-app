@@ -49,7 +49,7 @@ fun PrimaryTextFieldComponent(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             placeholder = {
                 Text(text = placeholder)
             },
