@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.ui.feature.sigin
+package com.johnnsantana.droidchat.ui.feature.signin
 
 
 data class SigInFormState (

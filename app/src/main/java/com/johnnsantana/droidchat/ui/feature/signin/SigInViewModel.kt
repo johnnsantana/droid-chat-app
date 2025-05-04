@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.ui.feature.sigin
+package com.johnnsantana.droidchat.ui.feature.signin
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

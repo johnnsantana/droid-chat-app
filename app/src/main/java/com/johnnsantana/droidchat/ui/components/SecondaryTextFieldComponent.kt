@@ -33,7 +33,6 @@ import com.johnnsantana.droidchat.ui.extension.bottomBorder
 import com.johnnsantana.droidchat.ui.extension.getVisualTransformationForPassword
 import com.johnnsantana.droidchat.ui.theme.ColorSuccess
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
-import com.johnnsantana.droidchat.ui.theme.Grey1
 
 @Composable
 fun SecondaryTextFieldComponent(
@@ -84,7 +83,8 @@ fun SecondaryTextFieldComponent(
         ) {
             Row(
                 modifier = Modifier.bottomBorder(
-                    Grey1, 1.dp
+                    MaterialTheme.colorScheme.onSurfaceVariant,
+                    1.dp
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
