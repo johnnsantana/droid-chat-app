@@ -29,9 +29,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.johnnsantana.droidchat.R
+import com.johnnsantana.droidchat.ui.extension.bottomBorder
 import com.johnnsantana.droidchat.ui.extension.getVisualTransformationForPassword
 import com.johnnsantana.droidchat.ui.theme.ColorSuccess
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
+import com.johnnsantana.droidchat.ui.theme.Grey1
 
 @Composable
 fun SecondaryTextFieldComponent(
@@ -81,6 +83,9 @@ fun SecondaryTextFieldComponent(
             color = MaterialTheme.colorScheme.surface
         ) {
             Row(
+                modifier = Modifier.bottomBorder(
+                    Grey1, 1.dp
+                ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
