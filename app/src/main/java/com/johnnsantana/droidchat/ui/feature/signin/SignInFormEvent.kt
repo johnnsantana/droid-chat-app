@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.ui.feature.sigin
+package com.johnnsantana.droidchat.ui.feature.signin
 
 sealed interface SignInFormEvent {
     data class EmailChanged(val email: String) : SignInFormEvent
