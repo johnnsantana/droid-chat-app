@@ -1,5 +1,9 @@
 package com.johnnsantana.droidchat.ui.components
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -17,6 +21,10 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,15 +34,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.johnnsantana.droidchat.R
+import com.johnnsantana.droidchat.providers.DroidChatFileProvider
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfilePictureOptionsModalBottomSheetComponent(
     onDismissRequest: () -> Unit,
+    onPictureSelected: (uri: Uri) -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState()
+    sheetState: SheetState = rememberModalBottomSheetState(),
+    context: Context = LocalContext.current
 ) {
+
+    var photoUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = {
+            it?.let {
+                onPictureSelected(it)
+            }
+        }
+    )
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { isSuccess ->
+            if (isSuccess && photoUri != null) {
+                onPictureSelected(photoUri!!)
+            }
+        }
+    )
+
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
@@ -46,15 +79,21 @@ fun ProfilePictureOptionsModalBottomSheetComponent(
         ProfilePictureOptionRow(
             iconResId = R.drawable.ic_photo_camera,
             textStringId = R.string.common_take_photo,
-            onClick = onDismissRequest
+            onClick = {
+                photoUri = DroidChatFileProvider.getImageUri(context.applicationContext)
+                cameraLauncher.launch(photoUri!!)
+            }
         )
 
         ProfilePictureOptionRow(
             iconResId = R.drawable.ic_photo_library,
             textStringId = R.string.common_upload_photo,
-            onClick = onDismissRequest
+            onClick = {
+                imagePicker.launch(
+                    "image/*"
+                )
+            }
         )
-
 
     }
 }
@@ -103,6 +142,9 @@ private fun ProfilePictureOptionsModalBottomSheetComponentPreview() {
     )
     DroidChatTheme {
         ProfilePictureOptionsModalBottomSheetComponent(
+            onPictureSelected = {
+
+            },
             onDismissRequest = {},
             sheetState = sheetState
         )
