@@ -6,8 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.johnnsantana.droidchat.R
-import com.johnnsantana.droidchat.data.model.CreateAccount
+import com.johnnsantana.droidchat.model.CreateAccount
 import com.johnnsantana.droidchat.data.repository.AuthRepository
+import com.johnnsantana.droidchat.model.NetworkException
 import com.johnnsantana.droidchat.validator.FormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -74,8 +75,8 @@ class SignUpViewModel @Inject constructor(
                try {
                    authRepository.signUp(
                        createAccount = CreateAccount(
-                           username = "",
-                           password = "",
+                           username = formState.email,
+                           password = formState.password,
                            firstName = formState.firstName,
                            lastName = formState.lastName,
                            profilePictureId = null
@@ -83,6 +84,9 @@ class SignUpViewModel @Inject constructor(
                    )
                } catch (e: Exception) {
                    e.printStackTrace()
+                   if (e is NetworkException.ApiException) {
+                       e.statusCode
+                   }
                }
 
             }

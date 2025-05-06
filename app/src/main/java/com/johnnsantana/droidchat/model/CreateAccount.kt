@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.data.model
+package com.johnnsantana.droidchat.model
 
 data class CreateAccount(
     val username: String,

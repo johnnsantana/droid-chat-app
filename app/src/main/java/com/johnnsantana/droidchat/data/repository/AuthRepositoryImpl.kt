@@ -1,6 +1,6 @@
 package com.johnnsantana.droidchat.data.repository
 
-import com.johnnsantana.droidchat.data.model.CreateAccount
+import com.johnnsantana.droidchat.model.CreateAccount
 import com.johnnsantana.droidchat.data.network.NetworkDataSource
 import com.johnnsantana.droidchat.data.network.model.AuthRequest
 import com.johnnsantana.droidchat.data.network.model.CreateAccountRequest
