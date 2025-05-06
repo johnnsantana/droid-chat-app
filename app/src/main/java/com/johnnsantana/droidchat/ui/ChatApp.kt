@@ -1,22 +1,24 @@
 package com.johnnsantana.droidchat.ui
 
-import android.content.Context
+import android.annotation.SuppressLint
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.johnnsantana.droidchat.navigation.ChatNavHost
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ChatApp() {
     Scaffold(
         bottomBar = {}
-    ) { paddingValues ->
+    ) {
         Box(
             modifier = Modifier
-                .padding(paddingValues)
+                .imePadding()
                 .fillMaxSize()
         ) {
             ChatNavHost()
