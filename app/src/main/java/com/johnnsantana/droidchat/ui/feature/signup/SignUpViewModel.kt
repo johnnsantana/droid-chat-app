@@ -70,25 +70,23 @@ class SignUpViewModel @Inject constructor(
     private fun doSignUp() {
         if (isValidForm()) {
             formState = formState.copy(isLoading =  true)
-
             viewModelScope.launch {
-               try {
-                   authRepository.signUp(
-                       createAccount = CreateAccount(
-                           username = formState.email,
-                           password = formState.password,
-                           firstName = formState.firstName,
-                           lastName = formState.lastName,
-                           profilePictureId = null
-                       )
-                   )
-               } catch (e: Exception) {
-                   e.printStackTrace()
-                   if (e is NetworkException.ApiException) {
-                       e.statusCode
-                   }
-               }
-
+                authRepository.signUp(
+                    createAccount = CreateAccount(
+                        username = formState.email,
+                        password = formState.password,
+                        firstName = formState.firstName,
+                        lastName = formState.lastName,
+                        profilePictureId = null
+                    )
+                ).fold(
+                    onSuccess = {
+                        formState = formState.copy(isLoading = false)
+                    },
+                    onFailure = {
+                        formState = formState.copy(isLoading = false)
+                    }
+                )
             }
         }
     }
