@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.validator.FormValidator
 
-class SignUpViewModel(
+class SignUpViewModel (
     private val formValidator: FormValidator<SignUpFormState>
 ): ViewModel() {
 

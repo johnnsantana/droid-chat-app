@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
@@ -36,7 +37,9 @@ import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 
 @Composable
 fun SignInRoute(
-    viewModel: SigInViewModel = viewModel(),
+    viewModel: SigInViewModel = viewModel {
+        SigInViewModel(formValidator = SignInFormValidator())
+    },
     navigateToSignUp: () -> Unit
 ) {
     var formState = viewModel.formState
@@ -49,7 +52,7 @@ fun SignInRoute(
 
 @Composable
 fun SigInScreen(
-    formState: SigInFormState,
+    formState: SignInFormState,
     onFormEvent: (SignInFormEvent) -> Unit = {},
     onRegisterClick: () -> Unit
 ) {
@@ -161,7 +164,7 @@ fun SigInScreen(
 private fun SignInScreenPreview() {
     DroidChatTheme {
         SigInScreen(
-            formState = SigInFormState(),
+            formState = SignInFormState(),
             onRegisterClick = {}
         )
     }

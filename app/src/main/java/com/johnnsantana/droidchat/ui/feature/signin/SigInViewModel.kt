@@ -5,13 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.johnnsantana.droidchat.R
+import com.johnnsantana.droidchat.validator.FormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class SigInViewModel @Inject constructor(): ViewModel() {
+class SigInViewModel (
+    private val formValidator: FormValidator<SignInFormState>
+): ViewModel() {
 
-    var formState by mutableStateOf(SigInFormState())
+    var formState by mutableStateOf(SignInFormState())
         private set
 
     fun onEvent(event: SignInFormEvent) {
@@ -29,16 +31,15 @@ class SigInViewModel @Inject constructor(): ViewModel() {
     }
 
     fun doSignIn() {
-        var isFormValid = true
-        if (formState.email.isBlank()) {
-            formState = formState.copy(emailError = R.string.error_message_email_invalid)
-            isFormValid = false
+        if (isValidForm()) {
+            formState = formState.copy(isLoading =  true)
         }
+    }
 
-      if (isFormValid) {
-          formState = formState.copy(isLoading = true)
-      }
-
+    private fun isValidForm(): Boolean {
+        return !formValidator.validate(formState).also {
+            formState = it
+        }.hasError
     }
 
 }

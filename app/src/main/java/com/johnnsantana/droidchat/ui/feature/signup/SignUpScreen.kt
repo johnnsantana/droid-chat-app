@@ -26,12 +26,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureOptionsModalBottomSheetComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureSelectorComponent
 import com.johnnsantana.droidchat.ui.components.SecondaryTextFieldComponent
+import com.johnnsantana.droidchat.ui.feature.signin.SigInViewModel
+import com.johnnsantana.droidchat.ui.feature.signin.SignInFormValidator
 import com.johnnsantana.droidchat.ui.theme.BackgroundGradient
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 import kotlinx.coroutines.launch
