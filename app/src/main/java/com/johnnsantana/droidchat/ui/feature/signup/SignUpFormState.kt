@@ -18,6 +18,11 @@ data class SignUpFormState (
    @StringRes
    val passwordErrorMessage: Int? = null,
    val passwordConfirmation: String = "",
+   @StringRes
+   val passwordConfirmationError: Int? = null,
+   @StringRes
+   val passwordExtraText: Int? = null,
    val isProfilePictureModalBottomSheetOpen: Boolean = false,
+   val hasError: Boolean = false,
    val isLoading: Boolean = false
 )
