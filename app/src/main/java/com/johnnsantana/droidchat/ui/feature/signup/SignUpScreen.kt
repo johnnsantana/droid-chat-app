@@ -41,9 +41,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
-    viewModel: SignUpViewModel = viewModel {
-        SignUpViewModel( formValidator = SignUpFormValidator() )
-    }
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val formState = viewModel.formState
     SignUpScreen(
