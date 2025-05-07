@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,14 +30,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureOptionsModalBottomSheetComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureSelectorComponent
 import com.johnnsantana.droidchat.ui.components.SecondaryTextFieldComponent
-import com.johnnsantana.droidchat.ui.feature.signin.SigInViewModel
-import com.johnnsantana.droidchat.ui.feature.signin.SignInFormValidator
 import com.johnnsantana.droidchat.ui.theme.BackgroundGradient
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 import kotlinx.coroutines.launch
@@ -44,10 +44,37 @@ fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val formState = viewModel.formState
+
     SignUpScreen(
         formState = formState,
         onFormEvent = viewModel::onFormEvent
     )
+
+    formState.apiErrorMessageResId?.let { resId ->
+        AlertDialog(
+            onDismissRequest = viewModel::errorMessageShown,
+            confirmButton = {
+                TextButton(
+                    onClick = viewModel::errorMessageShown
+                ) {
+                    Text(
+                        text = stringResource(R.string.common_ok)
+                    )
+                }
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.common_generic_error_title)
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(resId)
+                )
+            }
+        )
+    }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -189,7 +216,8 @@ fun SignUpScreen(
                             onFormEvent(
                                 SignUpFormEvent.Submit
                             )
-                        }
+                        },
+                        isLoading = formState.isLoading
                     )
                 }
             }
