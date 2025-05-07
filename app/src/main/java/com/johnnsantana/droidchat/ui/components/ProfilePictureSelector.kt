@@ -1,11 +1,13 @@
 package com.johnnsantana.droidchat.ui.components
 
 import android.net.Uri
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,27 +26,39 @@ import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 @Composable
 fun ProfilePictureSelectorComponent(
     modifier: Modifier = Modifier,
-    imageUri: Uri? = null
+    imageUri: Uri? = null,
+    isCompressingImage: Boolean
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AsyncImage(
-            model = imageUri ?: R.drawable.ic_upload_photo,
-            contentDescription = null,
-            modifier = modifier
-                .size(84.dp)
-                .clip(CircleShape),
-            placeholder = painterResource(R.drawable.ic_upload_photo),
-            contentScale = ContentScale.Crop
-        )
+        Box(
+            contentAlignment = Alignment.Center,
+        ) {
+            AsyncImage(
+                model = imageUri ?: R.drawable.ic_upload_photo,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(84.dp)
+                    .clip(CircleShape),
+                placeholder = painterResource(id = R.drawable.ic_upload_photo),
+                contentScale = ContentScale.Crop,
+            )
+
+            if (isCompressingImage) {
+                CircularProgressIndicator()
+            }
+        }
 
         Spacer(modifier = Modifier.height(4.dp))
 
+        val text = if (isCompressingImage) {
+            R.string.common_add_profile_photo_optimizing
+        } else R.string.common_add_profile_photo
         Text(
-            text = stringResource(id = R.string.common_add_profile_photo),
-            style = MaterialTheme.typography.bodyLarge
+            text = stringResource(id = text),
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -53,6 +67,8 @@ fun ProfilePictureSelectorComponent(
 @Composable
 fun ProfilePictureSelectorComponentPreview() {
     DroidChatTheme {
-        ProfilePictureSelectorComponent()
+        ProfilePictureSelectorComponent(
+            isCompressingImage = false
+        )
     }
 }
