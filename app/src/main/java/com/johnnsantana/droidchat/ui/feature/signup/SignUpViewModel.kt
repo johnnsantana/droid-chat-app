@@ -1,6 +1,5 @@
 package com.johnnsantana.droidchat.ui.feature.signup
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,10 +12,8 @@ import com.johnnsantana.droidchat.model.CreateAccount
 import com.johnnsantana.droidchat.data.repository.AuthRepository
 import com.johnnsantana.droidchat.model.NetworkException
 import com.johnnsantana.droidchat.utils.images.ImageCompressor
-import com.johnnsantana.droidchat.utils.images.ImageCompressorImpl
 import com.johnnsantana.droidchat.validator.FormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
