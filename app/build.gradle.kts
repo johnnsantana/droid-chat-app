@@ -93,6 +93,7 @@ dependencies {
 //    implementation("com.google.firebase:firebase-messaging")
 //    implementation(libs.accompanist.permissions)
 
+    implementation(libs.exifinterface)
 
     // Test
     testImplementation(libs.junit)
