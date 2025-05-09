@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.johnnsantana.droidchat.R
+import com.johnnsantana.droidchat.ui.components.AlertDialogComponent
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureOptionsModalBottomSheetComponent
 import com.johnnsantana.droidchat.ui.components.ProfilePictureSelectorComponent
@@ -41,7 +42,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
-    viewModel: SignUpViewModel = hiltViewModel()
+    viewModel: SignUpViewModel = hiltViewModel(),
+    onSignUpSuccess: () -> Unit
 ) {
     val formState = viewModel.formState
 
@@ -50,28 +52,24 @@ fun SignUpRoute(
         onFormEvent = viewModel::onFormEvent
     )
 
-    formState.apiErrorMessageResId?.let { resId ->
-        AlertDialog(
+    if (formState.isSignedUp) {
+        AlertDialogComponent(
             onDismissRequest = viewModel::errorMessageShown,
-            confirmButton = {
-                TextButton(
-                    onClick = viewModel::errorMessageShown
-                ) {
-                    Text(
-                        text = stringResource(R.string.common_ok)
-                    )
-                }
+            onConfirmButtonClick = viewModel::errorMessageShown,
+            message = stringResource(R.string.feature_sign_up_success),
+        )
+    }
+
+    formState.apiErrorMessageResId?.let { resId ->
+        AlertDialogComponent(
+            onDismissRequest = {
+                onSignUpSuccess()
             },
-            title = {
-                Text(
-                    text = stringResource(R.string.common_generic_error_title)
-                )
+            onConfirmButtonClick = {
+                onSignUpSuccess()
             },
-            text = {
-                Text(
-                    text = stringResource(resId)
-                )
-            }
+            message = stringResource(resId),
+            title = stringResource(R.string.common_generic_error_title)
         )
     }
 
