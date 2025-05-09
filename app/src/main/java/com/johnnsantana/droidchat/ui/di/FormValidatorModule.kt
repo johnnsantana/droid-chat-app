@@ -1,5 +1,7 @@
 package com.johnnsantana.droidchat.ui.di
 
+import com.johnnsantana.droidchat.ui.feature.signin.SignInFormState
+import com.johnnsantana.droidchat.ui.feature.signin.SignInFormValidator
 import com.johnnsantana.droidchat.ui.feature.signup.SignUpFormState
 import com.johnnsantana.droidchat.ui.feature.signup.SignUpFormValidator
 import com.johnnsantana.droidchat.validator.FormValidator
@@ -16,5 +18,10 @@ interface FormValidatorModule {
     fun bindSignUpFormValidator(
         signUpFormValidator: SignUpFormValidator
     ): FormValidator<SignUpFormState>
+
+    @Binds
+    fun bindSignInFormValidator(
+        signInFormValidator: SignInFormValidator
+    ): FormValidator<SignInFormState>
 
 }
