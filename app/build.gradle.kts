@@ -89,11 +89,13 @@ dependencies {
     implementation (libs.ktor.serialization.kotlinx.json)
     implementation (libs.ktor.client.logging)
 
-//    implementation(libs.firebase.bom)
-//    implementation("com.google.firebase:firebase-messaging")
-//    implementation(libs.accompanist.permissions)
+    //    implementation(libs.firebase.bom)
+    //    implementation("com.google.firebase:firebase-messaging")
+    //    implementation(libs.accompanist.permissions)
 
     implementation(libs.exifinterface)
+    implementation (libs.androidx.datastore.preferences)
+    implementation(libs.security.crypto)
 
     // Test
     testImplementation(libs.junit)
