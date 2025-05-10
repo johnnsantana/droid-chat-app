@@ -12,12 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -54,7 +51,7 @@ fun SignUpRoute(
 
     if (formState.isSignedUp) {
         AlertDialogComponent(
-            onDismissRequest = viewModel::errorMessageShown,
+            onDismissRequest = onSignUpSuccess,
             onConfirmButtonClick = viewModel::errorMessageShown,
             message = stringResource(R.string.feature_sign_up_success),
         )
@@ -62,12 +59,8 @@ fun SignUpRoute(
 
     formState.apiErrorMessageResId?.let { resId ->
         AlertDialogComponent(
-            onDismissRequest = {
-                onSignUpSuccess()
-            },
-            onConfirmButtonClick = {
-                onSignUpSuccess()
-            },
+            onDismissRequest = viewModel::errorMessageShown,
+            onConfirmButtonClick = viewModel::errorMessageShown,
             message = stringResource(resId),
             title = stringResource(R.string.common_generic_error_title)
         )

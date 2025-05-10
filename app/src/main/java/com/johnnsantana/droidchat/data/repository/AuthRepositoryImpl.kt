@@ -1,6 +1,7 @@
 package com.johnnsantana.droidchat.data.repository
 
 import com.johnnsantana.droidchat.data.di.IODispatcher
+import com.johnnsantana.droidchat.data.manager.TokenManager
 import com.johnnsantana.droidchat.model.CreateAccount
 import com.johnnsantana.droidchat.data.network.NetworkDataSource
 import com.johnnsantana.droidchat.data.network.model.AuthRequest
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
+    private val tokenManager: TokenManager,
     @IODispatcher private val IODispatcher: CoroutineDispatcher,
 ) : AuthRepository {
 
@@ -41,7 +43,7 @@ class AuthRepositoryImpl @Inject constructor(
                     )
                 )
 
-
+                tokenManager.saveAccessToken(tokenResponse.token)
             }
         }
     }
