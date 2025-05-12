@@ -1,8 +1,9 @@
-package com.johnnsantana.droidchat.data.manager
+package com.johnnsantana.droidchat.data.manager.token
 
 import android.content.Context
 import com.johnnsantana.droidchat.data.datasource.TokensKeys
 import com.johnnsantana.droidchat.data.di.IODispatcher
+import com.johnnsantana.droidchat.data.manager.CryptoManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
