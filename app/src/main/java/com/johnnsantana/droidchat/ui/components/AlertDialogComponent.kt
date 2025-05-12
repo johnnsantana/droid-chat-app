@@ -35,7 +35,7 @@ fun AlertDialogComponent(
             }
         },
         text = {
-            Text(text = message)
+            Text( text = message)
         }
     )
 
