@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.data.manager
+package com.johnnsantana.droidchat.data.manager.token
 
 import kotlinx.coroutines.flow.Flow
 

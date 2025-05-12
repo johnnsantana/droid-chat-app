@@ -1,6 +1,6 @@
 package com.johnnsantana.droidchat.ui.feature.splash
 
-import android.content.Context
+import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,19 +23,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleStartEffect
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.ui.theme.BackgroundGradient
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
-import kotlinx.coroutines.delay
+
 
 @Composable
 fun SplashRoute(
-    onNavigateToSignIn: () -> Unit
+    viewModel: SplashViewModel = hiltViewModel(),
+    onNavigateToSignIn: () -> Unit,
+    onNavigateToMain: () -> Unit,
+    onCLoseApp: () -> Unit
 ) {
     SplashScreen()
+
+    LifecycleStartEffect(Unit) {
+        viewModel.checkSession()
+        onStopOrDispose {  }
+    }
+
     LaunchedEffect(Unit) {
-        delay(2000)
-        onNavigateToSignIn()
+        viewModel.authenticationState.collect { authenticationState ->
+            when (authenticationState) {
+                SplashViewModel.AuthenticationState.UserAuthenticated -> {
+                    onNavigateToMain()
+                }
+                SplashViewModel.AuthenticationState.UserNotAuthenticated -> {
+                    onNavigateToSignIn()
+                }
+            }
+
+        }
     }
 }
 
@@ -70,7 +90,7 @@ fun SplashScreen() {
                 color = Color.White,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium
-                )
+            )
         }
     }
 }

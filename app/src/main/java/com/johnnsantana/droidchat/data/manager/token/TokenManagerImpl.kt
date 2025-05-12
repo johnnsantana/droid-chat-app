@@ -1,4 +1,4 @@
-package com.johnnsantana.droidchat.data.manager
+package com.johnnsantana.droidchat.data.manager.token
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

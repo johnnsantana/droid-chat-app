@@ -1,7 +1,11 @@
 package com.johnnsantana.droidchat.navigation
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,9 +23,11 @@ sealed interface Route {
     @Serializable object SignUpRoute
 }
 
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun ChatNavHost() {
     val navController = rememberNavController()
+    val activity = LocalContext.current as? Activity
 
     NavHost(navController = navController, startDestination = Route.SplashRoute) {
         composable<Route.SplashRoute> {
@@ -35,6 +41,16 @@ fun ChatNavHost() {
                             }
                         }
                     )
+                },
+                onNavigateToMain = {
+                    Toast.makeText(
+                        navController.context,
+                        "Navigate to main",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+                onCLoseApp = {
+                    activity?.finish()
                 }
             )
         }
