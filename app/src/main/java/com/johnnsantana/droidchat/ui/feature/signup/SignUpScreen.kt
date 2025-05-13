@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel(),
-    onSignUpSuccess: () -> Unit
+    onSignUpSuccess: () -> Unit,
 ) {
     val formState = viewModel.formState
 

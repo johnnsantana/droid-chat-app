@@ -12,16 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.johnnsantana.droidchat.navigation.extension.slideInTo
 import com.johnnsantana.droidchat.navigation.extension.slideOutTo
+import com.johnnsantana.droidchat.ui.feature.chats.ChatsRoute
+import com.johnnsantana.droidchat.ui.feature.chats.navigateToChats
 import com.johnnsantana.droidchat.ui.feature.signin.SignInRoute
 import com.johnnsantana.droidchat.ui.feature.signup.SignUpRoute
 import com.johnnsantana.droidchat.ui.feature.splash.SplashRoute
-import kotlinx.serialization.Serializable
 
-sealed interface Route {
-    @Serializable object SplashRoute
-    @Serializable object SignInRoute
-    @Serializable object SignUpRoute
-}
+
 
 @SuppressLint("ContextCastToActivity")
 @Composable
@@ -43,13 +40,15 @@ fun ChatNavHost() {
                     )
                 },
                 onNavigateToMain = {
-                    Toast.makeText(
-                        navController.context,
-                        "Navigate to main",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    navController.navigateToChats(
+                        navOptions = navOptions {
+                            popUpTo(Route.SplashRoute) {
+                                inclusive = true
+                            }
+                        }
+                    )
                 },
-                onCLoseApp = {
+                onCloseApp = {
                     activity?.finish()
                 }
             )
@@ -65,7 +64,16 @@ fun ChatNavHost() {
             SignInRoute(
                 navigateToSignUp = {
                     navController.navigate(Route.SignUpRoute)
-                }
+                },
+                onNavigateToMain = {
+                    navController.navigateToChats(
+                        navOptions = navOptions {
+                            popUpTo(Route.SplashRoute) {
+                                inclusive = true
+                            }
+                        }
+                    )
+                },
             )
         }
         composable<Route.SignUpRoute>(
@@ -79,8 +87,12 @@ fun ChatNavHost() {
             SignUpRoute(
                 onSignUpSuccess = {
                     navController.popBackStack()
-                }
+                },
             )
+        }
+
+        composable<Route.ChatsRoute> {
+            ChatsRoute()
         }
     }
 }
