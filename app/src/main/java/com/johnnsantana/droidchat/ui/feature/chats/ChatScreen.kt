@@ -52,7 +52,6 @@ fun ChatsScreen() {
         },
         containerColor = MaterialTheme.colorScheme.primary,
     ) { paddingValues ->
-
         LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
