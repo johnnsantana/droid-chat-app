@@ -101,6 +101,7 @@ dependencies {
 
 
     implementation(libs.constraint.layout.compose)
+    implementation(libs.constraint.layout.compose)
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
 
