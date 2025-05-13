@@ -49,7 +49,8 @@ import kotlinx.coroutines.flow.collectLatest
 fun SignInRoute(
     viewModel: SigInViewModel = hiltViewModel(),
     context: Context = LocalContext.current,
-    navigateToSignUp: () -> Unit
+    navigateToSignUp: () -> Unit,
+    onNavigateToMain: () -> Unit
 ) {
     var formState = viewModel.formState
 
@@ -59,7 +60,7 @@ fun SignInRoute(
         viewModel.signInActionFlow.collectLatest { action ->
             when(action) {
                 is SignInAction.Success -> {
-
+                    onNavigateToMain()
                 }
                 is SignInAction.Error -> {
                     when(action) {

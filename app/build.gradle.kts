@@ -99,6 +99,11 @@ dependencies {
     implementation (libs.androidx.datastore.preferences)
     implementation(libs.security.crypto)
 
+
+    implementation(libs.constraint.layout.compose)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

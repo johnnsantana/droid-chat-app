@@ -35,7 +35,7 @@ fun SplashRoute(
     viewModel: SplashViewModel = hiltViewModel(),
     onNavigateToSignIn: () -> Unit,
     onNavigateToMain: () -> Unit,
-    onCLoseApp: () -> Unit
+    onCloseApp: () -> Unit
 ) {
     SplashScreen()
 
