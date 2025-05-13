@@ -7,4 +7,6 @@ sealed interface Route {
     @Serializable object SignInRoute
     @Serializable object SignUpRoute
     @Serializable object ChatsRoute
+    @Serializable object UsersRoute
+    @Serializable object ProfileRoute
 }

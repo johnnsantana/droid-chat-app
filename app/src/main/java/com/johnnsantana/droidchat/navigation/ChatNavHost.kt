@@ -22,8 +22,10 @@ import com.johnnsantana.droidchat.ui.feature.splash.SplashRoute
 
 @SuppressLint("ContextCastToActivity")
 @Composable
-fun ChatNavHost() {
-    val navController = rememberNavController()
+fun ChatNavHost(
+    navigationState: DroidChatNavigationState,
+) {
+    val navController = navigationState.navController
     val activity = LocalContext.current as? Activity
 
     NavHost(navController = navController, startDestination = Route.SplashRoute) {
