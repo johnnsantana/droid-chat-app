@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,12 +23,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.model.Chat
 import com.johnnsantana.droidchat.ui.components.ChatItemComponent
+import com.johnnsantana.droidchat.ui.preview.ChatListPreviewParameterProvider
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 import com.johnnsantana.droidchat.ui.theme.Grey1
 
@@ -110,7 +111,7 @@ fun ChatsListContent(chats: List<Chat>) {
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         itemsIndexed(chats) { index, chat ->
-            ChatItemComponent()
+            ChatItemComponent(chat)
             if (index < chats.lastIndex) {
                 HorizontalDivider(
                     color = Grey1,
@@ -133,11 +134,14 @@ private fun ChatsScreenLoadingPreview() {
 
 @Preview
 @Composable
-private fun ChatsScreenSuccessPreview() {
+private fun ChatsScreenSuccessPreview(
+    @PreviewParameter(ChatListPreviewParameterProvider::class)
+    chats: List<Chat>
+) {
     DroidChatTheme {
         ChatsScreen(
             chatsListUIState = ChatsViewModel.ChatsListUIState.Success(
-                chats = emptyList()
+                chats = chats
             )
         )
     }
