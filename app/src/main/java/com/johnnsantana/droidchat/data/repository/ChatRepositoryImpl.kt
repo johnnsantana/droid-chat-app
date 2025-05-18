@@ -3,12 +3,11 @@ package com.johnnsantana.droidchat.data.repository
 import com.johnnsantana.droidchat.data.di.IODispatcher
 import com.johnnsantana.droidchat.data.manager.selfuser.SelfUserManager
 import com.johnnsantana.droidchat.data.manager.token.TokenManager
+import com.johnnsantana.droidchat.data.mapper.asDomainModel
 import com.johnnsantana.droidchat.data.network.NetworkDataSource
 import com.johnnsantana.droidchat.data.network.model.PaginationParams
 import com.johnnsantana.droidchat.model.Chat
-import com.johnnsantana.droidchat.model.User
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -36,24 +35,8 @@ class ChatRepositoryImpl @Inject constructor (
                    )
                )
                val selfUser = selfUserManager.selfUserFlow.firstOrNull()
-               paginatedChatResponse.chats.map { chatResponse ->
-                   Chat(
-                       id = chatResponse.id,
-                       lastMessage = chatResponse.lastMessages,
-                       members = chatResponse.members.map { userResponse ->
-                           User(
-                               id = userResponse.id,
-                               self = userResponse.id == selfUser?.id,
-                               firstName = userResponse.firstName,
-                               lastName = userResponse.lastName,
-                               profilePictureUrl = userResponse.profilePictureUrl,
-                               username = userResponse.username
-                           )
-                       },
-                       unreadCount = chatResponse.unreadCount,
-                       timestamp = ""
-                   )
-               }
+
+               paginatedChatResponse.asDomainModel(selfUser?.id)
            }
        }
     }
