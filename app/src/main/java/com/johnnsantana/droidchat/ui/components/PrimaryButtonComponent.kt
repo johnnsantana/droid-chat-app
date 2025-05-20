@@ -23,7 +23,7 @@ import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 fun PrimaryButtonComponent(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
 
