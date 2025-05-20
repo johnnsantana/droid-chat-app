@@ -2,6 +2,7 @@ package com.johnnsantana.droidchat.ui.feature.chats
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,7 +30,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.johnnsantana.droidchat.R
 import com.johnnsantana.droidchat.model.Chat
+import com.johnnsantana.droidchat.ui.components.AnimatedContent
 import com.johnnsantana.droidchat.ui.components.ChatItemComponent
+import com.johnnsantana.droidchat.ui.components.GeneralError
+import com.johnnsantana.droidchat.ui.components.ChatItemShimmer
+import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.preview.ChatListPreviewParameterProvider
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 import com.johnnsantana.droidchat.ui.theme.Grey1
@@ -40,14 +45,14 @@ fun ChatsRoute(
 ) {
     val chatsListUIState by viewModel.chatListUIState.collectAsStateWithLifecycle()
     ChatsScreen(
-        chatsListUIState = chatsListUIState
+        chatsListUIState = chatsListUIState,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatsScreen(
-    chatsListUIState: ChatsViewModel.ChatsListUIState
+    chatsListUIState: ChatsViewModel.ChatsListUIState,
 ) {
     Scaffold(
         topBar = {
@@ -92,13 +97,36 @@ fun ChatsScreen(
         ) {
             when (chatsListUIState) {
                 ChatsViewModel.ChatsListUIState.Loading -> {
-
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                       repeat(5) { index ->
+                           ChatItemShimmer()
+                           if (index < 4) {
+                               HorizontalDivider(
+                                    color = Grey1
+                               )
+                           }
+                       }
+                    }
                 }
                 is ChatsViewModel.ChatsListUIState.Success -> {
-                    ChatsListContent(chats = chatsListUIState.chats)
+                      ChatsListContent(chats = chatsListUIState.chats)
                 }
                 ChatsViewModel.ChatsListUIState.Error -> {
-
+                    GeneralError(
+                        title = stringResource(R.string.common_generic_error_title),
+                        message = stringResource(R.string.common_generic_error_message),
+                        resource = {
+                            AnimatedContent()
+                        },
+                        action = {
+                            PrimaryButtonComponent(
+                                text = stringResource(R.string.common_retry_again),
+                                onClick = {},
+                            )
+                        }
+                    )
                 }
             }
         }

@@ -23,7 +23,7 @@ class ChatsViewModel @Inject constructor(
         getChats()
     }
 
-    private fun getChats() {
+    fun getChats() {
         viewModelScope.launch {
             chatRepository.getChats(
                 offset = 0,
