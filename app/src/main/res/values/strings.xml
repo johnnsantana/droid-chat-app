@@ -41,6 +41,8 @@
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
 
+    <string name="feature_chats_empty_list">Lista de conversas vazia.\nComece uma nova conversa clicando no botão + abaixo.</string>
+
 
     <string name="error_message_profile_picture_uploading_failed">Erro ao fazer upload da foto de perfil, tente novamente (formatos aceitos: jpg, jpeg, png)</string>​
 

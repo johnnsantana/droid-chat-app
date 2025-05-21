@@ -4,6 +4,7 @@ import com.johnnsantana.droidchat.data.network.model.AuthRequest
 import com.johnnsantana.droidchat.data.network.model.CreateAccountRequest
 import com.johnnsantana.droidchat.data.network.model.ImageResponse
 import com.johnnsantana.droidchat.data.network.model.PaginatedChatResponse
+import com.johnnsantana.droidchat.data.network.model.PaginatedUserResponse
 import com.johnnsantana.droidchat.data.network.model.PaginationParams
 import com.johnnsantana.droidchat.data.network.model.TokenResponse
 import com.johnnsantana.droidchat.data.network.model.UserResponse
@@ -15,7 +16,9 @@ interface NetworkDataSource {
 
     suspend fun uploadProfilePicture(filePath: String): ImageResponse
 
-    suspend fun authenticate(token: String): UserResponse
+    suspend fun authenticate(): UserResponse
 
-    suspend fun getChats(token: String, paginationParams: PaginationParams): PaginatedChatResponse
+    suspend fun getChats(paginationParams: PaginationParams): PaginatedChatResponse
+
+    suspend fun getUsers(paginationParams: PaginationParams): PaginatedUserResponse
 }

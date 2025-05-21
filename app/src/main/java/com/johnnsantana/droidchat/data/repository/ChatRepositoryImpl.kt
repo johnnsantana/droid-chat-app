@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor (
     private val networkDataSource: NetworkDataSource,
-    private val tokenManager: TokenManager,
     @IODispatcher private val IODispatcher: CoroutineDispatcher,
     private val selfUserManager: SelfUserManager
 ) : ChatRepository {
@@ -25,10 +24,8 @@ class ChatRepositoryImpl @Inject constructor (
     ): Result<List<Chat>> {
        return withContext(IODispatcher) {
            runCatching {
-               val token = tokenManager.accessToken.firstOrNull() ?: ""
 
                val paginatedChatResponse = networkDataSource.getChats(
-                   token = token,
                    paginationParams = PaginationParams(
                        offset = offset.toString(),
                        limit = offset.toString(),

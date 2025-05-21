@@ -4,11 +4,15 @@ import com.johnnsantana.droidchat.data.network.model.AuthRequest
 import com.johnnsantana.droidchat.data.network.model.CreateAccountRequest
 import com.johnnsantana.droidchat.data.network.model.ImageResponse
 import com.johnnsantana.droidchat.data.network.model.PaginatedChatResponse
+import com.johnnsantana.droidchat.data.network.model.PaginatedUserResponse
 import com.johnnsantana.droidchat.data.network.model.PaginationParams
 import com.johnnsantana.droidchat.data.network.model.TokenResponse
 import com.johnnsantana.droidchat.data.network.model.UserResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerAuthProvider
+import io.ktor.client.plugins.plugin
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
@@ -17,6 +21,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.URLBuilder
 import java.io.File
 import javax.inject.Inject
 
@@ -49,23 +54,35 @@ class NetworkDataSourceImpl @Inject constructor(
         ).body<ImageResponse>()
     }
 
-    override suspend fun authenticate(token: String): UserResponse {
+    override suspend fun authenticate(): UserResponse {
         return httpClient.get("authenticate") {
-            header(HttpHeaders.Authorization, "Bearer $token")
         }.body<UserResponse>()
     }
 
     override suspend fun getChats(
-        token: String,
         paginationParams: PaginationParams
     ): PaginatedChatResponse {
         return httpClient.get("conversations") {
-            header(HttpHeaders.Authorization, "Bearer $token")
-            url {
-                parameters.append("offset", paginationParams.offset)
-                parameters.append("limit", paginationParams.limit)
-            }
+           url {
+               appendPaginationParams(paginationParams)
+           }
         }.body<PaginatedChatResponse>()
+    }
+
+    override suspend fun getUsers(
+        paginationParams: PaginationParams
+    ): PaginatedUserResponse {
+        return httpClient.get("users") {
+            url {
+                appendPaginationParams(paginationParams)
+            }
+        }.body()
+    }
+
+
+    private fun URLBuilder.appendPaginationParams(paginationParams: PaginationParams) {
+        parameters.append("offset", paginationParams.offset)
+        parameters.append("limit", paginationParams.limit)
     }
 
 }
