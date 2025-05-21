@@ -17,7 +17,7 @@ import com.johnnsantana.droidchat.ui.feature.chats.navigateToChats
 import com.johnnsantana.droidchat.ui.feature.signin.SignInRoute
 import com.johnnsantana.droidchat.ui.feature.signup.SignUpRoute
 import com.johnnsantana.droidchat.ui.feature.splash.SplashRoute
-
+import com.johnnsantana.droidchat.ui.feature.users.UsersRoute
 
 
 @SuppressLint("ContextCastToActivity")
@@ -92,9 +92,11 @@ fun ChatNavHost(
                 },
             )
         }
-
         composable<Route.ChatsRoute> {
             ChatsRoute()
+        }
+        composable<Route.UsersRoute> {
+            UsersRoute()
         }
     }
 }
