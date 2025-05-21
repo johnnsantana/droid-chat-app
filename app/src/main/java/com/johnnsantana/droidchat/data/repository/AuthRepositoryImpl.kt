@@ -77,10 +77,10 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun authenticate(token: String): Result<Unit> {
+    override suspend fun authenticate(): Result<Unit> {
         return withContext(IODispatcher) {
             runCatching {
-                val userResponse = networkDataSource.authenticate(token)
+                val userResponse = networkDataSource.authenticate()
 
                 selfUserManager.saveSelfUserData(
                     id = userResponse.id,

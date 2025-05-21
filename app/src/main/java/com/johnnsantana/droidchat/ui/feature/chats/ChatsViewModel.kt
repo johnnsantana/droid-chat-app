@@ -31,7 +31,7 @@ class ChatsViewModel @Inject constructor(
             ).fold(
                 onSuccess = { chats ->
                     _chatListUIState.update {
-                        ChatsListUIState.Loading
+                        ChatsListUIState.Success(chats = chats)
                     }
 
                 },

@@ -34,6 +34,7 @@ import com.johnnsantana.droidchat.ui.components.AnimatedContent
 import com.johnnsantana.droidchat.ui.components.ChatItemComponent
 import com.johnnsantana.droidchat.ui.components.GeneralError
 import com.johnnsantana.droidchat.ui.components.ChatItemShimmer
+import com.johnnsantana.droidchat.ui.components.GeneralEmptyList
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.preview.ChatListPreviewParameterProvider
 import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
@@ -111,14 +112,29 @@ fun ChatsScreen(
                     }
                 }
                 is ChatsViewModel.ChatsListUIState.Success -> {
-                      ChatsListContent(chats = chatsListUIState.chats)
+                    when(chatsListUIState.chats.isNotEmpty()) {
+                        true -> { ChatsListContent(chats = chatsListUIState.chats) }
+                        false -> {
+                            GeneralEmptyList(
+                                message = stringResource(R.string.feature_chats_empty_list),
+                                resource = {
+                                    AnimatedContent(
+                                        resId = R.raw.animation_empty_list
+                                    )
+                                }
+                            )
+                        }
+                    }
+
                 }
                 ChatsViewModel.ChatsListUIState.Error -> {
                     GeneralError(
                         title = stringResource(R.string.common_generic_error_title),
                         message = stringResource(R.string.common_generic_error_message),
                         resource = {
-                            AnimatedContent()
+                            AnimatedContent(
+                                resId = R.raw.animation_generic_error
+                            )
                         },
                         action = {
                             PrimaryButtonComponent(
@@ -170,6 +186,21 @@ private fun ChatsScreenSuccessPreview(
         ChatsScreen(
             chatsListUIState = ChatsViewModel.ChatsListUIState.Success(
                 chats = chats
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ChatsScreenSuccessEmptyPreview(
+    @PreviewParameter(ChatListPreviewParameterProvider::class)
+    chats: List<Chat>
+) {
+    DroidChatTheme {
+        ChatsScreen(
+            chatsListUIState = ChatsViewModel.ChatsListUIState.Success(
+                chats = emptyList()
             )
         )
     }

@@ -34,7 +34,7 @@ class SplashViewModel @Inject constructor(
                 return@launch
             }
 
-            auhRepository.authenticate(accessToken).fold (
+            auhRepository.authenticate().fold (
                 onSuccess = {
                     _authenticationState.emit(AuthenticationState.UserAuthenticated)
                 },
@@ -44,8 +44,6 @@ class SplashViewModel @Inject constructor(
                         _authenticationState.emit(AuthenticationState.UserNotAuthenticated)
                     } else {
                         showErrorDialogState = true
-
-
                     }
                 }
             )

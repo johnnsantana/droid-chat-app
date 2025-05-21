@@ -16,7 +16,7 @@ import com.johnnsantana.droidchat.ui.theme.DroidChatTheme
 @Composable
 fun AnimatedContent(
     modifier: Modifier = Modifier,
-    @RawRes resId: Int = R.raw.animation_generic_error
+    @RawRes resId: Int
 ) {
     val composition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(resId)
@@ -39,6 +39,8 @@ fun AnimatedContent(
 @Composable
 private fun AnimatedContentPreview() {
     DroidChatTheme {
-        AnimatedContent()
+        AnimatedContent(
+            resId = R.raw.animation_generic_error
+        )
     }
 }
