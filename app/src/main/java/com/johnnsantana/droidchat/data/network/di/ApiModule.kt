@@ -78,7 +78,7 @@ object ApiModule {
             plugin(HttpSend).intercept { request ->
                 val accessToken = tokenManager.accessToken.firstOrNull()
                 accessToken?.let {
-                    request.headers.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ1c2VycyIsImlzcyI6Imh0dHA6Ly8wLjAuMC4wOjgwODAiLCJleHAiOjE3NzkyODAxODksInVzZXJJZCI6Ijc4In0.apKSJW1uikqQq2sr39Ur0Yis2XejH4eAuaWDFh4vwSQ")
+                    request.headers.append("Authorization", "Bearer $it")
                 }
                 execute(request)
             }
