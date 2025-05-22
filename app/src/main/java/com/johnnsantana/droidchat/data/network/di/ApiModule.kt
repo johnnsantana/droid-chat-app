@@ -44,7 +44,7 @@ object ApiModule {
         return HttpClient(CIO) {
             expectSuccess = true
 
-            install (Logging) {
+            install(Logging) {
                 logger = Logger.SIMPLE
                 level = LogLevel.ALL
             }
@@ -74,14 +74,26 @@ object ApiModule {
                     }
                 }
             }
-        }.apply {
-            plugin(HttpSend).intercept { request ->
-                val accessToken = tokenManager.accessToken.firstOrNull()
-                accessToken?.let {
-                    request.headers.append("Authorization", "Bearer $it")
+
+            install(Auth) {
+                bearer {
+                    loadTokens { 
+                        BearerTokens(
+                            "Bearer", ""
+                        )
+                    }
                 }
-                execute(request)
             }
         }
+//        }.apply {
+//            plugin(HttpSend).intercept { request ->
+//                val accessToken = tokenManager.accessToken.firstOrNull()
+//                accessToken?.let {
+//                    val token = it
+//                    request.headers.append("Authorization", "Bearer ")
+//                }
+//                execute(request)
+//            }
+//        }
     }
 }

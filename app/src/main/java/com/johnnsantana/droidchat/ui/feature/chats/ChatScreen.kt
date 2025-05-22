@@ -34,6 +34,8 @@ import com.johnnsantana.droidchat.ui.components.AnimatedContent
 import com.johnnsantana.droidchat.ui.components.ChatItemComponent
 import com.johnnsantana.droidchat.ui.components.GeneralError
 import com.johnnsantana.droidchat.ui.components.ChatItemShimmer
+import com.johnnsantana.droidchat.ui.components.ChatScaffold
+import com.johnnsantana.droidchat.ui.components.ChatTopAppBar
 import com.johnnsantana.droidchat.ui.components.GeneralEmptyList
 import com.johnnsantana.droidchat.ui.components.PrimaryButtonComponent
 import com.johnnsantana.droidchat.ui.preview.ChatListPreviewParameterProvider
@@ -55,9 +57,9 @@ fun ChatsRoute(
 fun ChatsScreen(
     chatsListUIState: ChatsViewModel.ChatsListUIState,
 ) {
-    Scaffold(
+    ChatScaffold(
         topBar = {
-            TopAppBar(
+            ChatTopAppBar(
                 title = {
                     Text(
                         text = AnnotatedString.fromHtml(
@@ -70,32 +72,10 @@ fun ChatsScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                expandedHeight = 100.dp
             )
         },
         containerColor = MaterialTheme.colorScheme.primary,
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-                .background(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = MaterialTheme.shapes.extraLarge.copy(
-                        bottomStart = CornerSize(0.dp),
-                        bottomEnd = CornerSize(0.dp)
-                    )
-                )
-                .clip(
-                    shape = MaterialTheme.shapes.extraLarge.copy(
-                        bottomStart = CornerSize(0.dp),
-                        bottomEnd = CornerSize(0.dp)
-                    )
-                )
-                .fillMaxSize(),
-        ) {
+    ) {
             when (chatsListUIState) {
                 ChatsViewModel.ChatsListUIState.Loading -> {
                     Column(
@@ -145,7 +125,6 @@ fun ChatsScreen(
                     )
                 }
             }
-        }
     }
 }
 

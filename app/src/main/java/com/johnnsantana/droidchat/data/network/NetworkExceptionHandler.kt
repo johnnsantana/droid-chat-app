@@ -12,6 +12,5 @@ suspend fun <T> handleNetworkException(block: suspend () -> T): T {
         throw NetworkException.ApiException(errorMessage, e.response.status.value)
     } catch (e: Exception) {
         throw NetworkException.UnknownNetworkException(e)
-
     }
 }

@@ -49,8 +49,8 @@ fun ChatItemComponent(
         ) = createRefs()
 
 
-        AsyncImage(
-            model = receiver.profilePictureUrl,
+        RoundedAvatar(
+            imageUri = receiver.profilePictureUrl,
             contentDescription = null,
             modifier = Modifier
                 .clip(CircleShape)
@@ -60,10 +60,7 @@ fun ChatItemComponent(
                     start.linkTo(parent.start)
                     bottom.linkTo(parent.bottom, margin = 16.dp)
                     width = Dimension.fillToConstraints
-                },
-            placeholder = painterResource(R.drawable.no_profile_image),
-            error = painterResource(R.drawable.no_profile_image),
-            fallback = painterResource(R.drawable.no_profile_image)
+                }
         )
 
         Text(

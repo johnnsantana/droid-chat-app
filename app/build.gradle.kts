@@ -90,6 +90,10 @@ dependencies {
     implementation (libs.ktor.client.auth)
     implementation (libs.ktor.serialization.kotlinx.json)
     implementation (libs.ktor.client.logging)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    ksp(libs.androidx.room.compiler)
 
     //    implementation(libs.firebase.bom)
     //    implementation("com.google.firebase:firebase-messaging")
