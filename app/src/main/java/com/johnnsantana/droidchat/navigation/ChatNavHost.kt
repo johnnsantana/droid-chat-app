@@ -3,6 +3,7 @@ package com.johnnsantana.droidchat.navigation
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.widget.Toast
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -10,8 +11,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.johnnsantana.droidchat.navigation.Route.ChatDetailsRoute
 import com.johnnsantana.droidchat.navigation.extension.slideInTo
 import com.johnnsantana.droidchat.navigation.extension.slideOutTo
+import com.johnnsantana.droidchat.ui.chatdetails.ChatDetailRoute
+import com.johnnsantana.droidchat.ui.chatdetails.ChatDetailViewModel
 import com.johnnsantana.droidchat.ui.feature.chats.ChatsRoute
 import com.johnnsantana.droidchat.ui.feature.chats.navigateToChats
 import com.johnnsantana.droidchat.ui.feature.signin.SignInRoute
@@ -26,7 +30,7 @@ fun ChatNavHost(
     navigationState: DroidChatNavigationState,
 ) {
     val navController = navigationState.navController
-    val activity = LocalContext.current as? Activity
+    val activity = LocalActivity.current
 
     NavHost(navController = navController, startDestination = Route.SplashRoute) {
         composable<Route.SplashRoute> {
@@ -96,7 +100,18 @@ fun ChatNavHost(
             ChatsRoute()
         }
         composable<Route.UsersRoute> {
-            UsersRoute()
+            UsersRoute(
+                navigateToChatDetails = { userId ->
+                    navController.navigate(ChatDetailsRoute(userId))
+                }
+            )
+        }
+        composable<ChatDetailsRoute> {
+            ChatDetailRoute(
+                navigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

@@ -9,4 +9,6 @@ sealed interface Route {
     @Serializable object ChatsRoute
     @Serializable object UsersRoute
     @Serializable object ProfileRoute
+
+    @Serializable data class ChatDetailsRoute(val userId: Int)
 }

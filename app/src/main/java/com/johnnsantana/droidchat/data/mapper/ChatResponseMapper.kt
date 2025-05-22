@@ -28,15 +28,3 @@ fun PaginatedChatResponse.asDomainModel(selfUserId: Int?): List<Chat> = this.cha
 }
 
 
-private fun Long.toTimestamp(): String {
-    val messageDateTime = LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(this),
-        ZoneId.systemDefault()
-    )
-
-    val now = LocalDateTime.now()
-
-   return if (messageDateTime.toLocalDate() == now.toLocalDate()) {
-        messageDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-    } else messageDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-}
